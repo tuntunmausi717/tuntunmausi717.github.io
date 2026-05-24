@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishu Shrivastav | Portfolio</title>
+    <style>
+        /* ============ SPACE THEME CSS ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ============ PARTICLES CANVAS ============ */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ============ MAIN CONTAINER ============ */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ============ NAVIGATION ============ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #1a1a2e;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ffff;
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-subtitle {
+            color: #a855f7;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .hero-role {
+            font-size: 1.4rem;
+            color: #a855f7;
+            min-height: 30px;
+        }
+
+        .hero-role::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #00ffff;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-desc {
+            color: #888;
+            max-width: 500px;
+            margin-top: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            color: #555;
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* ============ SECTIONS ============ */
+        .section {
+            margin: 80px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            font-size: 2rem;
+            border-bottom: 2px solid #1a1a2e;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .section-subtitle {
+            color: #a855f7;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* ============ ABOUT ============ */
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            color: #bbb;
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .stat-box {
+            text-align: center;
+            border: 1px solid #1a1a2e;
+            padding: 15px 25px;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ffff;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* ============ SKILLS ============ */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            border: 1px solid #1a1a2e;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #bbb;
+            transition: 0.3s;
+        }
+
+        .skill-tag:hover {
+            border-color: #00ffff;
+            color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .skill-tag.highlight {
+            border-color: #a855f7;
+            color: #a855f7;
+        }
+
+        /* ============ PROJECTS ============ */
+        .project-card {
+            border: 1px solid #1a1a2e;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            background: #0d0d1a;
+            transition: 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        .project-card h4 {
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: #888;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .project-card .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            border: 1px solid #a855f7;
+            color: #a855f7;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        .project-card .btn:hover {
+            background: #a855f7;
+            color: #000;
+        }
+
+        /* ============ CHATBOT BUTTON ============ */
+        .chatbot-btn-container {
+            text-align: center;
+            margin: 50px 0;
+            padding: 20px;
+        }
+
+        .chatbot-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #a855f7, #00ffff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-btn:hover {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* ============ CONTACT ============ */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-email {
+            font-size: 1.5rem;
+            color: #a855f7;
+            text-decoration: none;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #00ffff;
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            text-align: center;
+            color: #333;
+            font-size: 0.8rem;
+            padding: 30px 0;
+            border-top: 1px solid #111;
+            margin-top: 60px;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .nav-links {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">VISHU</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <p class="hero-subtitle">INITIALIZING_SYSTEM</p>
+            <h1 class="hero-title">Vishu Shrivastav</h1>
+            <div class="hero-role" id="typing-text"></div>
+            <p class="hero-desc">⚡ Passionate about building modern web experiences using the latest technologies. I learn by building and improving every single day.</p>
+            <p class="scroll-indicator">↓ Scroll ↓</p>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <h2 class="section-title">/ About Me</h2>
+            <h3 class="section-subtitle">Building from the ground up.</h3>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I am <strong>Vishu Shrivastav</strong>, an aspiring developer starting my journey in the world of technology. I'm fascinated by how websites and apps work, and I'm dedicated to learning the core skills that power them.</p>
+                    <p>My focus right now is mastering the fundamentals: <strong>HTML, CSS, Python, and JavaScript</strong>. I believe in building a solid foundation before moving to advanced frameworks.</p>
+                    <div class="about-stats">
+                        <div class="stat-box">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Projects Built</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Technologies</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">Curiosity</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section" id="skills">
+            <h2 class="section-title">/ Arsenal</h2>
+            <h3 class="section-subtitle">Current Tech Stack</h3>
+            <div class="skills-grid">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag highlight">Python</span>
+                <span class="skill-tag">Git & GitHub</span>
+                <span class="skill-tag">Responsive Design</span>
+                <span class="skill-tag">VS Code</span>
+                <span class="skill-tag">Termux</span>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <h2 class="section-title">/ Selected Work</h2>
+            
+            <div class="project-card">
+                <h4>🤖 AI-Powered Telegram Chatbot</h4>
+                <p>Built an intelligent Telegram chatbot using Python, Flask, and Groq API. Implemented conversational AI features and deployed on Vercel for 24/7 availability.</p>
+                <a href="https://tuntunmausi717.github.io/vizz.github.io/chatbot/" class="btn" target="_blank">Live Demo</a>
+                <a href="https://github.com/tuntunmausi717/tuntunmausi717.github.io" class="btn" target="_blank">Source Code</a>
+            </div>
+            
+            <div class="project-card">
+                <h4>🕵️ OSINT Telegram Bot</h4>
+                <p>Developed a bot to retrieve public Telegram profile information. Integrated CyberSameer API for data enrichment with robust error handling.</p>
+                <a href="#" class="btn">View Source</a>
+            </div>
+            
+            <div class="project-card">
+                <h4>🌐 Personal Portfolio Website</h4>
+                <p>Designed and developed a responsive dark-themed portfolio website featuring CSS animations, particle effects, and mobile-first design.</p>
+                <a href="https://vishushrivastav.github.io" class="btn" target="_blank">Live Demo</a>
+            </div>
+        </section>
+
+        <!-- 🤖 CHATBOT BUTTON SECTION (YAHAN ADD KIYA) -->
+        <div class="chatbot-btn-container">
+            <a href="/chatbot/" class="chatbot-btn">
+                🤖 TRY MY AI CHATBOT
+            </a>
+            <p style="color: #888; margin-top: 12px; font-size: 14px;">
+                ⚡ Powered by Groq AI — Hinglish Chatbot
+            </p>
+        </div>
+
+        <!-- Contact Section -->
+        <section class="section contact-section" id="contact">
+            <h2 class="section-title">/ Contact</h2>
+            <p style="color: #a855f7; font-size: 1.5rem; margin-bottom: 15px;">HAVE A PROJECT IN MIND?</p>
+            <p style="color: #888; margin-bottom: 20px;">Let's learn and build something together.</p>
+            <a href="mailto:your-email@example.com" class="contact-email">your-email@example.com</a>
+            <div class="social-links">
+                <a href="https://github.com/tuntunmausi717" target="_blank">GitHub</a>
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Telegram</a>
+            </div>
+        </section>
+
+        <footer>
+            © 2026 Vishu Shrivastav. All Rights Reserved.
+        </footer>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ============ TYPING EFFECT ============
+        const roles = [
+            "Aspiring Full Stack Developer",
+            "Python Enthusiast 🐍",
+            "AI Chatbot Builder 🤖",
+            "Open Source Contributor 🚀"
+        ];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingEl = document.getElementById('typing-text');
+
+        function type() {
+            if (roleIndex === roles.length) roleIndex = 0;
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                typingEl.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingEl.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+                return;
+            }
+            if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex++;
+                setTimeout(type, 500);
+                return;
+            }
+            setTimeout(type, isDeleting ? 30 : 100);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // ============ SCROLL REVEAL ============
+        function revealSections() {
+            document.querySelectorAll('.section').forEach(section => {
+                const top = section.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) {
+                    section.classList.add('revealed');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealSections);
+        window.addEventListener('load', revealSections);
+
+        // ============ PARTICLE ANIMATION ============
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(168, 85, 247, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        // Create particles
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
